@@ -16,4 +16,4 @@ Notes
 * If you compile yourself, place sound.wav into the executable directory.
 * Deleting QuickSouls.ini should resolve any issues with the tool configuration.
 
-Icon by [shout4silence](http://www.nexusmods.com/darksouls/mods/293/), included notification sound by [opm](https://www.freesound.org/people/opm/sounds/2105/).
+Icon by [shout4silence](http://www.nexusmods.com/darksouls/mods/293/), included notification sound by [opm](https://www.freesound.org/people/opm/sounds/2105/). Hotkey selection class by [Telrunya](http://www.codeproject.com/Articles/15085/A-simple-hotkey-selection-control-for-NET).
