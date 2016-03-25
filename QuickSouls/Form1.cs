@@ -3,11 +3,14 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Media;
+using GlobalHook;
 
 namespace QuickSouls
 {
     public partial class Form1 : Form
     {
+        globalKeyboardHook globalHook = new globalKeyboardHook();
+
         // Set up variables
         string SaveDir = "";
         int QSKey = 0;
@@ -16,12 +19,12 @@ namespace QuickSouls
         int QLKeyMod = 0;
         bool SoundFlag = true;
 
-        // Enable global hotkey functionality
-        [DllImport("user32.dll")]
+        /*Enable global hotkey functionality
+        [DllImport("user32.dll", EntryPoint="GetAsyncKeyState", SetLastError=true, ExactSpelling=true, CallingConvention=CallingConvention.StdCall)]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
 
         [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);*/
 
         // Sound Play
         private void playSound()
@@ -126,8 +129,12 @@ namespace QuickSouls
         // Register Hotkeys
         private void buttonLaunch_Click(object sender, EventArgs e)
         {
-            RegisterHotKey(this.Handle, 1, (int)hotkeyControlQS.HotkeyModifiers, (int)hotkeyControlQS.Hotkey);
-            RegisterHotKey(this.Handle, 2, (int)hotkeyControlQL.HotkeyModifiers, (int)hotkeyControlQL.Hotkey);
+            globalHook.KeyDown -= new KeyEventHandler(SaveFunctions);
+
+            globalHook.HookedKeys.Add(hotkeyControlQS.Hotkey);
+            globalHook.HookedKeys.Add(hotkeyControlQL.Hotkey);
+
+            globalHook.KeyDown += new KeyEventHandler(SaveFunctions);
 
             MessageBox.Show(
                 "Hotkeys have been registered.",
@@ -136,11 +143,11 @@ namespace QuickSouls
                 MessageBoxIcon.Information);
         }
 
-        // Execute stuff
-        protected override void WndProc(ref Message m)
+        // Execute stuff 
+        private void SaveFunctions(object sender, KeyEventArgs e)
         {
-            // Quick Save
-            if (m.Msg == 0x0312 && (int)m.WParam == 1)
+            // Save
+            if (e.KeyCode == hotkeyControlQS.Hotkey)
             {
                 if (File.Exists(SaveDir + "DRAKS0005.sl2"))
                 {
@@ -150,21 +157,22 @@ namespace QuickSouls
                 }
             }
 
-            // Quick Load
-            if (m.Msg == 0x0312 && (int)m.WParam == 2)
+            // Load
+            if (e.KeyCode == hotkeyControlQL.Hotkey)
             {
                 if (File.Exists(@"quicksave.sl2"))
                 {
-                    try { 
+                    try
+                    {
                         File.Copy(@"quicksave.sl2", SaveDir + "DRAKS0005.sl2", true);
                         if (SoundFlag == true)
                             playSound();
-                        }
+                    }
                     catch { MessageBox.Show("Could not complete quick load.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
                 }
             }
 
-            base.WndProc(ref m);
+            e.Handled = true;
         }
 
         // Form Load
@@ -175,8 +183,7 @@ namespace QuickSouls
         // Form Close
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            UnregisterHotKey(this.Handle, 1);
-            UnregisterHotKey(this.Handle, 2);
+            globalHook.unhook();
         }
     }
 }

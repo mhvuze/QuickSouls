@@ -141,11 +141,11 @@
             // 
             this.labelCredits.AutoSize = true;
             this.labelCredits.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCredits.Location = new System.Drawing.Point(365, 140);
+            this.labelCredits.Location = new System.Drawing.Point(354, 140);
             this.labelCredits.Name = "labelCredits";
-            this.labelCredits.Size = new System.Drawing.Size(157, 13);
+            this.labelCredits.Size = new System.Drawing.Size(168, 13);
             this.labelCredits.TabIndex = 12;
-            this.labelCredits.Text = "QuickSouls v1 by MHVuze";
+            this.labelCredits.Text = "QuickSouls v1.1 by MHVuze";
             // 
             // hotkeyControlQL
             // 
