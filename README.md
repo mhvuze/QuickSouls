@@ -1,5 +1,4 @@
 # QuickSouls
---------
 Simple quicksave utility for Dark Souls (PC), written in C#. Press hotkey to do a quicksave, leave to main menu if you want to reload and press hotkey to restore quicksave.
 
 ![alt tag](http://i.imgur.com/KryxhsS.png)
