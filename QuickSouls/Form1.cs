@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Media;
 using GlobalHook;
+using System.Collections.Generic;
 
 namespace QuickSouls
 {
@@ -12,19 +13,13 @@ namespace QuickSouls
         globalKeyboardHook globalHook = new globalKeyboardHook();
 
         // Set up variables
-        string SaveDir = "";
-        int QSKey = 0;
-        int QSKeyMod = 0;
-        int QLKey = 0;
-        int QLKeyMod = 0;
+        string SaveDir = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents\\NBGI\\DarkSouls\\");
+        int QSKey = (int)Keys.F7;
+        int QSKeyMod = (int)Keys.None;
+        int QLKey = (int)Keys.F8;
+        int QLKeyMod = (int)Keys.None;
         bool SoundFlag = true;
-
-        /*Enable global hotkey functionality
-        [DllImport("user32.dll", EntryPoint="GetAsyncKeyState", SetLastError=true, ExactSpelling=true, CallingConvention=CallingConvention.StdCall)]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
-
-        [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);*/
+        int GameID = 1;
 
         // Sound Play
         private void playSound()
@@ -37,51 +32,43 @@ namespace QuickSouls
         public Form1()
         {
             InitializeComponent();
+        }
 
-            // Check for config file
-            if (!File.Exists(@"QuickSouls.ini"))
-            {
-                string[] settings = { 
-                                        Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents\\NBGI\\DarkSouls\\"),  // Default save data path
-                                        ((int)Keys.F7).ToString(),                                                                              // Default quick save hotkey
-                                        ((int)Keys.None).ToString(),                                                                            // Default quick save hotkey modifier
-                                        ((int)Keys.F8).ToString(),                                                                              // Default quick load hotkey
-                                        ((int)Keys.None).ToString(),                                                                            // Default quick load hotkey modifier
-                                        1.ToString()                                                                                            // Default sound property                     
-                                    };
+        // Set Dark Souls: PTDE defaults
+        private void buttonPTDE_Click(object sender, EventArgs e)
+        {
+            textBoxDir.Text = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents\\NBGI\\DarkSouls\\");
+            GameID = 1;
+            SaveDir = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents\\NBGI\\DarkSouls\\");
 
-                using (StreamWriter defaultConfig = new StreamWriter(@"QuickSouls.ini"))
-                {
-                    foreach (string line in settings)
-                        defaultConfig.WriteLine(line);
-                }
+            var lines = File.ReadAllLines(@"QuickSouls.ini");
+            lines[0] = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents\\NBGI\\DarkSouls\\");
+            lines[6] = GameID.ToString();
+            File.WriteAllLines(@"QuickSouls.ini", lines);
+        }
 
-                SaveDir = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents\\NBGI\\DarkSouls\\");
-                QSKey = (int)Keys.F7;
-                QSKeyMod = (int)Keys.None;
-                QLKey = (int)Keys.F8;
-                QLKeyMod = (int)Keys.None;
-                SoundFlag = true;
-            }
-            else
-            {
-                StreamReader ConfigReader = new StreamReader(@"QuickSouls.ini");
-                SaveDir = ConfigReader.ReadLine();
-                QSKey = int.Parse(ConfigReader.ReadLine());
-                QSKeyMod = int.Parse(ConfigReader.ReadLine());
-                QLKey = int.Parse(ConfigReader.ReadLine());
-                QLKeyMod = int.Parse(ConfigReader.ReadLine());
-                SoundFlag = int.Parse(ConfigReader.ReadLine()) == 1 ? true : false;
-                ConfigReader.Close();
-            }
+        // Set Dark Souls 2 defaults
+        private void buttonDS2_Click(object sender, EventArgs e)
+        {
+            // Try to figure out unique ID without user input
+            string DS2Dir = Path.Combine(Environment.ExpandEnvironmentVariables("%appdata%"), "DarkSoulsII\\");
+            List<string> subfolders = new List<string>(Directory.EnumerateDirectories(DS2Dir));
+            string DS2Id = subfolders.Count == 1 ? subfolders[0].Substring(subfolders[0].LastIndexOf("\\") + 1) + "\\" : "paste-your-id-here-and-set\\";
 
-            // Fill boxes
-            textBoxDir.Text = SaveDir;
-            hotkeyControlQS.Hotkey = (Keys)QSKey;
-            hotkeyControlQS.HotkeyModifiers = (Keys)QSKeyMod;
-            hotkeyControlQL.Hotkey = (Keys)QLKey;
-            hotkeyControlQL.HotkeyModifiers = (Keys)QLKeyMod;
-            checkBoxSound.Checked = SoundFlag == true ? true : false;
+            if (subfolders.Count > 1) { MessageBox.Show("Could not determine unique ID automatically, please add it in the path field on your own.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+
+            // Proceed as usual
+            textBoxDir.Text = DS2Dir + DS2Id;
+            GameID = 2;
+            SaveDir = DS2Dir + DS2Id;
+
+            var lines = File.ReadAllLines(@"QuickSouls.ini");
+            lines[0] = DS2Dir + DS2Id;
+            lines[6] = GameID.ToString();
+            File.WriteAllLines(@"QuickSouls.ini", lines);
+
+            // ***REMOVE LATER***
+            MessageBox.Show("This has not been tested yet and is merely based on a theoretical approach. Do not forget to insert the unique ID from the savedata path.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         // 'Set save directory' button
@@ -129,15 +116,34 @@ namespace QuickSouls
         // Register Hotkeys
         private void buttonLaunch_Click(object sender, EventArgs e)
         {
-            globalHook.KeyDown -= new KeyEventHandler(SaveFunctions);
-
             globalHook.HookedKeys.Add(hotkeyControlQS.Hotkey);
             globalHook.HookedKeys.Add(hotkeyControlQL.Hotkey);
 
             globalHook.KeyDown += new KeyEventHandler(SaveFunctions);
 
+            buttonLaunch.Enabled = false;
+            buttonStop.Enabled = true;
+
             MessageBox.Show(
                 "Hotkeys have been registered.",
+                "Information",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
+        // Unregister Hotkeys
+        private void buttonStop_Click(object sender, EventArgs e)
+        {
+            globalHook.KeyDown -= new KeyEventHandler(SaveFunctions);
+
+            globalHook.HookedKeys.Remove(hotkeyControlQS.Hotkey);
+            globalHook.HookedKeys.Remove(hotkeyControlQL.Hotkey);
+
+            buttonLaunch.Enabled = true;
+            buttonStop.Enabled = false;
+
+            MessageBox.Show(
+                "Hotkeys have been unregistered.",
                 "Information",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
@@ -149,9 +155,18 @@ namespace QuickSouls
             // Save
             if (e.KeyCode == hotkeyControlQS.Hotkey)
             {
-                if (File.Exists(SaveDir + "DRAKS0005.sl2"))
+                // Dark Souls: PTDE
+                if (GameID == 1 && File.Exists(SaveDir + "DRAKS0005.sl2"))
                 {
-                    File.Copy(SaveDir + "DRAKS0005.sl2", @"quicksave.sl2", true);
+                    File.Copy(SaveDir + "DRAKS0005.sl2", @"quicksave_ptde.sl2", true);
+                    if (SoundFlag == true)
+                        playSound();
+                }
+
+                // Dark Souls 2
+                if (GameID == 2 && File.Exists(SaveDir + "DARKSII0000.sl2"))
+                {
+                    File.Copy(SaveDir + "DARKSII0000.sl2", @"quicksave_ds2.sl2", true);
                     if (SoundFlag == true)
                         playSound();
                 }
@@ -160,11 +175,24 @@ namespace QuickSouls
             // Load
             if (e.KeyCode == hotkeyControlQL.Hotkey)
             {
-                if (File.Exists(@"quicksave.sl2"))
+                // Dark Souls: PTDE
+                if (GameID == 1 && File.Exists(@"quicksave_ptde.sl2"))
                 {
                     try
                     {
-                        File.Copy(@"quicksave.sl2", SaveDir + "DRAKS0005.sl2", true);
+                        File.Copy(@"quicksave_ptde.sl2", SaveDir + "DRAKS0005.sl2", true);
+                        if (SoundFlag == true)
+                            playSound();
+                    }
+                    catch { MessageBox.Show("Could not complete quick load.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+                }
+
+                // Dark Souls 2
+                if (GameID == 2 && File.Exists(@"quicksave_ds2.sl2"))
+                {
+                    try
+                    {
+                        File.Copy(@"quicksave_ds2.sl2", SaveDir + "DARKSII0000.sl2", true);
                         if (SoundFlag == true)
                             playSound();
                     }
@@ -178,6 +206,45 @@ namespace QuickSouls
         // Form Load
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Check for config file
+            if (!File.Exists(@"QuickSouls.ini"))
+            {
+                string[] settings = { 
+                                        Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents\\NBGI\\DarkSouls\\"),  // Default save data path
+                                        ((int)Keys.F7).ToString(),                                                                              // Default quick save hotkey
+                                        ((int)Keys.None).ToString(),                                                                            // Default quick save hotkey modifier
+                                        ((int)Keys.F8).ToString(),                                                                              // Default quick load hotkey
+                                        ((int)Keys.None).ToString(),                                                                            // Default quick load hotkey modifier
+                                        1.ToString(),                                                                                           // Default sound property
+                                        1.ToString()                                                                                            // Default game ID (1 = DS:PTDE; 2 = DS2; 3 = DS2:SOTFS; 4 = DS3)
+                                    };
+
+                using (StreamWriter defaultConfig = new StreamWriter(@"QuickSouls.ini"))
+                {
+                    foreach (string line in settings)
+                        defaultConfig.WriteLine(line);
+                }
+            }
+            else
+            {
+                StreamReader ConfigReader = new StreamReader(@"QuickSouls.ini");
+                SaveDir = ConfigReader.ReadLine();
+                QSKey = int.Parse(ConfigReader.ReadLine());
+                QSKeyMod = int.Parse(ConfigReader.ReadLine());
+                QLKey = int.Parse(ConfigReader.ReadLine());
+                QLKeyMod = int.Parse(ConfigReader.ReadLine());
+                SoundFlag = int.Parse(ConfigReader.ReadLine()) == 1 ? true : false;
+                GameID = int.Parse(ConfigReader.ReadLine());
+                ConfigReader.Close();
+            }
+
+            // Fill boxes
+            textBoxDir.Text = SaveDir;
+            hotkeyControlQS.Hotkey = (Keys)QSKey;
+            hotkeyControlQS.HotkeyModifiers = (Keys)QSKeyMod;
+            hotkeyControlQL.Hotkey = (Keys)QLKey;
+            hotkeyControlQL.HotkeyModifiers = (Keys)QLKeyMod;
+            checkBoxSound.Checked = SoundFlag == true ? true : false;
         }
 
         // Form Close
