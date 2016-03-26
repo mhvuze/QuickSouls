@@ -280,7 +280,7 @@ namespace QuickSouls
                 {
                     try
                     {
-                        File.Copy(@"quicksave_sotfs.sl2", SaveDir + "DS30000.sl2", true);
+                        File.Copy(@"quicksave_ds3.sl2", SaveDir + "DS30000.sl2", true);
                         if (SoundFlag == true)
                             playSound();
                     }
