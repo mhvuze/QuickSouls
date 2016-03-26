@@ -52,6 +52,7 @@ namespace QuickSouls
         {
             // Try to figure out unique ID without user input
             string DS2Dir = Path.Combine(Environment.ExpandEnvironmentVariables("%appdata%"), "DarkSoulsII\\");
+            if (!Directory.Exists(DS2Dir)) Directory.CreateDirectory(DS2Dir);
             List<string> subfolders = new List<string>(Directory.EnumerateDirectories(DS2Dir));
             string DS2Id = subfolders.Count == 1 ? subfolders[0].Substring(subfolders[0].LastIndexOf("\\") + 1) + "\\" : "paste-your-id-here-and-set\\";
 
@@ -69,6 +70,53 @@ namespace QuickSouls
 
             // ***REMOVE LATER***
             MessageBox.Show("This has not been tested yet and is merely based on a theoretical approach. Do not forget to insert the unique ID from the savedata path.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        // Set Dark Souls 2: SOTFS defaults
+        private void buttonSOTFS_Click(object sender, EventArgs e)
+        {
+            // Try to figure out unique ID without user input
+            string DS2Dir = Path.Combine(Environment.ExpandEnvironmentVariables("%appdata%"), "DarkSoulsII\\");
+            if (!Directory.Exists(DS2Dir)) Directory.CreateDirectory(DS2Dir);
+            List<string> subfolders = new List<string>(Directory.EnumerateDirectories(DS2Dir));
+            string DS2Id = subfolders.Count == 1 ? subfolders[0].Substring(subfolders[0].LastIndexOf("\\") + 1) + "\\" : "paste-your-id-here-and-set\\";
+
+            if (subfolders.Count > 1) { MessageBox.Show("Could not determine unique ID automatically, please add it in the path field on your own.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+
+            // Proceed as usual
+            textBoxDir.Text = DS2Dir + DS2Id;
+            GameID = 3;
+            SaveDir = DS2Dir + DS2Id;
+
+            var lines = File.ReadAllLines(@"QuickSouls.ini");
+            lines[0] = DS2Dir + DS2Id;
+            lines[6] = GameID.ToString();
+            File.WriteAllLines(@"QuickSouls.ini", lines);
+
+            // ***REMOVE LATER***
+            MessageBox.Show("This has not been tested yet and is merely based on a theoretical approach. Do not forget to insert the unique ID from the savedata path.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        // Set Dark Souls 3 defaults
+        private void buttonDS3_Click(object sender, EventArgs e)
+        {
+            // Try to figure out unique ID without user input
+            string DS3Dir = Path.Combine(Environment.ExpandEnvironmentVariables("%appdata%"), "DarkSoulsIII\\");
+            if (!Directory.Exists(DS3Dir)) Directory.CreateDirectory(DS3Dir);
+            List<string> subfolders = new List<string>(Directory.EnumerateDirectories(DS3Dir));
+            string DS3Id = subfolders.Count == 1 ? subfolders[0].Substring(subfolders[0].LastIndexOf("\\") + 1) + "\\" : "paste-your-id-here-and-set\\";
+
+            if (subfolders.Count > 1) { MessageBox.Show("Could not determine unique ID automatically, please add it in the path field on your own.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+
+            // Proceed as usual
+            textBoxDir.Text = DS3Dir + DS3Id;
+            GameID = 4;
+            SaveDir = DS3Dir + DS3Id;
+
+            var lines = File.ReadAllLines(@"QuickSouls.ini");
+            lines[0] = DS3Dir + DS3Id;
+            lines[6] = GameID.ToString();
+            File.WriteAllLines(@"QuickSouls.ini", lines);
         }
 
         // 'Set save directory' button
@@ -170,6 +218,22 @@ namespace QuickSouls
                     if (SoundFlag == true)
                         playSound();
                 }
+
+                // Dark Souls 2: SOTFS
+                if (GameID == 3 && File.Exists(SaveDir + "DS2SOFS0000.sl2"))
+                {
+                    File.Copy(SaveDir + "DS2SOFS0000.sl2", @"quicksave_sotfs.sl2", true);
+                    if (SoundFlag == true)
+                        playSound();
+                }
+
+                // Dark Souls 3
+                if (GameID == 4 && File.Exists(SaveDir + "DS30000.sl2"))
+                {
+                    File.Copy(SaveDir + "DS30000.sl2", @"quicksave_ds3.sl2", true);
+                    if (SoundFlag == true)
+                        playSound();
+                }
             }
 
             // Load
@@ -193,6 +257,30 @@ namespace QuickSouls
                     try
                     {
                         File.Copy(@"quicksave_ds2.sl2", SaveDir + "DARKSII0000.sl2", true);
+                        if (SoundFlag == true)
+                            playSound();
+                    }
+                    catch { MessageBox.Show("Could not complete quick load.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+                }
+
+                // Dark Souls 2: SOTFS
+                if (GameID == 3 && File.Exists(@"quicksave_sotfs.sl2"))
+                {
+                    try
+                    {
+                        File.Copy(@"quicksave_sotfs.sl2", SaveDir + "DS2SOFS0000.sl2", true);
+                        if (SoundFlag == true)
+                            playSound();
+                    }
+                    catch { MessageBox.Show("Could not complete quick load.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+                }
+
+                // Dark Souls 3
+                if (GameID == 4 && File.Exists(@"quicksave_ds3.sl2"))
+                {
+                    try
+                    {
+                        File.Copy(@"quicksave_sotfs.sl2", SaveDir + "DS30000.sl2", true);
                         if (SoundFlag == true)
                             playSound();
                     }

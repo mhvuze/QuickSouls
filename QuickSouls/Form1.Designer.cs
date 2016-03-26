@@ -152,7 +152,7 @@
             this.labelCredits.Name = "labelCredits";
             this.labelCredits.Size = new System.Drawing.Size(168, 13);
             this.labelCredits.TabIndex = 12;
-            this.labelCredits.Text = "QuickSouls v1.2 by MHVuze";
+            this.labelCredits.Text = "QuickSouls v1.3 by MHVuze";
             // 
             // label1
             // 
@@ -193,23 +193,23 @@
             // 
             // buttonSOTFS
             // 
-            this.buttonSOTFS.Enabled = false;
             this.buttonSOTFS.Location = new System.Drawing.Point(270, 32);
             this.buttonSOTFS.Name = "buttonSOTFS";
             this.buttonSOTFS.Size = new System.Drawing.Size(123, 23);
             this.buttonSOTFS.TabIndex = 17;
             this.buttonSOTFS.Text = "Dark Souls 2: SOTFS";
             this.buttonSOTFS.UseVisualStyleBackColor = true;
+            this.buttonSOTFS.Click += new System.EventHandler(this.buttonSOTFS_Click);
             // 
             // buttonDS3
             // 
-            this.buttonDS3.Enabled = false;
             this.buttonDS3.Location = new System.Drawing.Point(399, 32);
             this.buttonDS3.Name = "buttonDS3";
             this.buttonDS3.Size = new System.Drawing.Size(123, 23);
             this.buttonDS3.TabIndex = 18;
             this.buttonDS3.Text = "Dark Souls 3";
             this.buttonDS3.UseVisualStyleBackColor = true;
+            this.buttonDS3.Click += new System.EventHandler(this.buttonDS3_Click);
             // 
             // buttonStop
             // 
