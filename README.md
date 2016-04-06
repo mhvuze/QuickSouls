@@ -1,7 +1,7 @@
 # QuickSouls
 Simple quicksave utility for Dark Souls games (PC), written in C#. Press hotkey to do a quicksave, leave to main menu if you want to reload and press hotkey to restore quicksave. This will NOT save a 1:1 game state but killed enemies, found items etc. are preserved.
 
-![alt tag](http://i.imgur.com/xgNQsFW.png)
+![alt tag](http://i.imgur.com/amdJlG3.png)
 
 Important
 --------
@@ -11,7 +11,7 @@ Important
 
 Notes
 --------
-* While I have implemented Dark Souls II support, I haven't tested it yet.
+* Dark Souls: PTDE and Dark Souls III implementation have been tested by me somewhat throughly, Dark Souls II and SOTFS not however.
 * Modifier hotkeys do not work properly for the time being, so be aware of that. Function keys work wonderfully for me and I haven't tested anything else really.
 * If you compile yourself, place sound.wav into the executable directory.
 * Deleting QuickSouls.ini should resolve any issues concerning the tool configuration.
@@ -20,7 +20,6 @@ Planned
 --------
 * Verify Dark Souls II functionality.
 * Verify Dark Souls II: SOTFS functionality.
-* Verify Dark Souls III functionality.
 
 Special Thanks
 --------
