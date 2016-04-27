@@ -1,7 +1,7 @@
 # QuickSouls
 Simple quicksave utility for Dark Souls games (PC), written in C#. Press hotkey to do a quicksave, leave to main menu if you want to reload and press hotkey to restore quicksave. This will NOT save a 1:1 game state but killed enemies, found items etc. are preserved.
 
-![alt tag](http://i.imgur.com/amdJlG3.png)
+![alt tag](http://i.imgur.com/CsW2iFa.png)
 
 Important
 --------
