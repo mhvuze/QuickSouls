@@ -7,17 +7,18 @@ Important
 --------
 * While there shouldn't be any issues like accidental savedata loss, you use this tool at your very own responsibility.
 * No idea if this causes issues with the online component of the game, I never used nor cared for it.
-* Try installing .NET Framework 4.5 if some features do not work for you, that's the target framework I used.
+* Try installing .NET Framework 4.6.1 if some features do not work for you, that's the target framework I used.
 
 Notes
 --------
-* Dark Souls: PTDE and Dark Souls III implementation have been tested by me somewhat throughly, Dark Souls II and SOTFS not however.
+* Dark Souls: PTDE and Dark Souls III implementation have been tested by me somewhat throughly, Dark Souls: Remastered, Dark Souls II and SOTFS not however.
 * Modifier hotkeys do not work properly for the time being, so be aware of that. Function keys work wonderfully for me and I haven't tested anything else really.
 * If you compile yourself, place sound.wav into the executable directory.
 * Deleting QuickSouls.ini should resolve any issues concerning the tool configuration.
 
 Planned
 --------
+* Verify Dark Souls: Remastered functionality.
 * Verify Dark Souls II functionality.
 * Verify Dark Souls II: SOTFS functionality.
 

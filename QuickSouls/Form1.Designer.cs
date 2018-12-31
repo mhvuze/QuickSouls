@@ -47,6 +47,7 @@
             this.buttonSOTFS = new System.Windows.Forms.Button();
             this.buttonDS3 = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
+            this.buttonDSRE = new System.Windows.Forms.Button();
             this.hotkeyControlQL = new exscape.HotkeyControl();
             this.hotkeyControlQS = new exscape.HotkeyControl();
             this.SuspendLayout();
@@ -54,7 +55,7 @@
             // labelDir
             // 
             this.labelDir.AutoSize = true;
-            this.labelDir.Location = new System.Drawing.Point(12, 74);
+            this.labelDir.Location = new System.Drawing.Point(12, 110);
             this.labelDir.Name = "labelDir";
             this.labelDir.Size = new System.Drawing.Size(124, 13);
             this.labelDir.TabIndex = 0;
@@ -62,14 +63,14 @@
             // 
             // textBoxDir
             // 
-            this.textBoxDir.Location = new System.Drawing.Point(142, 71);
+            this.textBoxDir.Location = new System.Drawing.Point(142, 107);
             this.textBoxDir.Name = "textBoxDir";
             this.textBoxDir.Size = new System.Drawing.Size(295, 20);
             this.textBoxDir.TabIndex = 1;
             // 
             // buttonSetDir
             // 
-            this.buttonSetDir.Location = new System.Drawing.Point(443, 69);
+            this.buttonSetDir.Location = new System.Drawing.Point(443, 105);
             this.buttonSetDir.Name = "buttonSetDir";
             this.buttonSetDir.Size = new System.Drawing.Size(78, 23);
             this.buttonSetDir.TabIndex = 2;
@@ -80,7 +81,7 @@
             // labelSeperator1
             // 
             this.labelSeperator1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelSeperator1.Location = new System.Drawing.Point(13, 99);
+            this.labelSeperator1.Location = new System.Drawing.Point(13, 135);
             this.labelSeperator1.Name = "labelSeperator1";
             this.labelSeperator1.Size = new System.Drawing.Size(509, 2);
             this.labelSeperator1.TabIndex = 3;
@@ -88,7 +89,7 @@
             // labelQSKey
             // 
             this.labelQSKey.AutoSize = true;
-            this.labelQSKey.Location = new System.Drawing.Point(13, 111);
+            this.labelQSKey.Location = new System.Drawing.Point(13, 147);
             this.labelQSKey.Name = "labelQSKey";
             this.labelQSKey.Size = new System.Drawing.Size(98, 13);
             this.labelQSKey.TabIndex = 4;
@@ -97,7 +98,7 @@
             // labelQLKey
             // 
             this.labelQLKey.AutoSize = true;
-            this.labelQLKey.Location = new System.Drawing.Point(214, 111);
+            this.labelQLKey.Location = new System.Drawing.Point(214, 147);
             this.labelQLKey.Name = "labelQLKey";
             this.labelQLKey.Size = new System.Drawing.Size(95, 13);
             this.labelQLKey.TabIndex = 6;
@@ -105,7 +106,7 @@
             // 
             // buttonSetKey
             // 
-            this.buttonSetKey.Location = new System.Drawing.Point(443, 106);
+            this.buttonSetKey.Location = new System.Drawing.Point(443, 142);
             this.buttonSetKey.Name = "buttonSetKey";
             this.buttonSetKey.Size = new System.Drawing.Size(78, 23);
             this.buttonSetKey.TabIndex = 8;
@@ -116,14 +117,14 @@
             // labelSeperator2
             // 
             this.labelSeperator2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelSeperator2.Location = new System.Drawing.Point(12, 135);
+            this.labelSeperator2.Location = new System.Drawing.Point(12, 171);
             this.labelSeperator2.Name = "labelSeperator2";
             this.labelSeperator2.Size = new System.Drawing.Size(509, 2);
             this.labelSeperator2.TabIndex = 9;
             // 
             // buttonLaunch
             // 
-            this.buttonLaunch.Location = new System.Drawing.Point(12, 146);
+            this.buttonLaunch.Location = new System.Drawing.Point(12, 182);
             this.buttonLaunch.Name = "buttonLaunch";
             this.buttonLaunch.Size = new System.Drawing.Size(195, 35);
             this.buttonLaunch.TabIndex = 10;
@@ -136,7 +137,7 @@
             this.checkBoxSound.AutoSize = true;
             this.checkBoxSound.Checked = true;
             this.checkBoxSound.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxSound.Location = new System.Drawing.Point(414, 149);
+            this.checkBoxSound.Location = new System.Drawing.Point(414, 185);
             this.checkBoxSound.Name = "checkBoxSound";
             this.checkBoxSound.Size = new System.Drawing.Size(104, 30);
             this.checkBoxSound.TabIndex = 11;
@@ -148,16 +149,16 @@
             // 
             this.labelCredits.AutoSize = true;
             this.labelCredits.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCredits.Location = new System.Drawing.Point(354, 190);
+            this.labelCredits.Location = new System.Drawing.Point(343, 228);
             this.labelCredits.Name = "labelCredits";
-            this.labelCredits.Size = new System.Drawing.Size(168, 13);
+            this.labelCredits.Size = new System.Drawing.Size(179, 13);
             this.labelCredits.TabIndex = 12;
-            this.labelCredits.Text = "QuickSouls v1.3 by MHVuze";
+            this.labelCredits.Text = "QuickSouls v1.3.1 by MHVuze";
             // 
             // label1
             // 
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Location = new System.Drawing.Point(12, 62);
+            this.label1.Location = new System.Drawing.Point(12, 98);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(509, 2);
             this.label1.TabIndex = 13;
@@ -175,7 +176,7 @@
             // 
             this.buttonPTDE.Location = new System.Drawing.Point(12, 32);
             this.buttonPTDE.Name = "buttonPTDE";
-            this.buttonPTDE.Size = new System.Drawing.Size(123, 23);
+            this.buttonPTDE.Size = new System.Drawing.Size(132, 23);
             this.buttonPTDE.TabIndex = 15;
             this.buttonPTDE.Text = "Dark Souls: PTDE";
             this.buttonPTDE.UseVisualStyleBackColor = true;
@@ -183,9 +184,9 @@
             // 
             // buttonDS2
             // 
-            this.buttonDS2.Location = new System.Drawing.Point(141, 32);
+            this.buttonDS2.Location = new System.Drawing.Point(150, 32);
             this.buttonDS2.Name = "buttonDS2";
-            this.buttonDS2.Size = new System.Drawing.Size(123, 23);
+            this.buttonDS2.Size = new System.Drawing.Size(132, 23);
             this.buttonDS2.TabIndex = 16;
             this.buttonDS2.Text = "Dark Souls 2";
             this.buttonDS2.UseVisualStyleBackColor = true;
@@ -193,9 +194,9 @@
             // 
             // buttonSOTFS
             // 
-            this.buttonSOTFS.Location = new System.Drawing.Point(270, 32);
+            this.buttonSOTFS.Location = new System.Drawing.Point(150, 61);
             this.buttonSOTFS.Name = "buttonSOTFS";
-            this.buttonSOTFS.Size = new System.Drawing.Size(123, 23);
+            this.buttonSOTFS.Size = new System.Drawing.Size(132, 23);
             this.buttonSOTFS.TabIndex = 17;
             this.buttonSOTFS.Text = "Dark Souls 2: SOTFS";
             this.buttonSOTFS.UseVisualStyleBackColor = true;
@@ -203,9 +204,9 @@
             // 
             // buttonDS3
             // 
-            this.buttonDS3.Location = new System.Drawing.Point(399, 32);
+            this.buttonDS3.Location = new System.Drawing.Point(288, 32);
             this.buttonDS3.Name = "buttonDS3";
-            this.buttonDS3.Size = new System.Drawing.Size(123, 23);
+            this.buttonDS3.Size = new System.Drawing.Size(132, 23);
             this.buttonDS3.TabIndex = 18;
             this.buttonDS3.Text = "Dark Souls 3";
             this.buttonDS3.UseVisualStyleBackColor = true;
@@ -214,7 +215,7 @@
             // buttonStop
             // 
             this.buttonStop.Enabled = false;
-            this.buttonStop.Location = new System.Drawing.Point(213, 146);
+            this.buttonStop.Location = new System.Drawing.Point(213, 182);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(195, 35);
             this.buttonStop.TabIndex = 19;
@@ -222,11 +223,21 @@
             this.buttonStop.UseVisualStyleBackColor = true;
             this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
             // 
+            // buttonDSRE
+            // 
+            this.buttonDSRE.Location = new System.Drawing.Point(12, 61);
+            this.buttonDSRE.Name = "buttonDSRE";
+            this.buttonDSRE.Size = new System.Drawing.Size(132, 23);
+            this.buttonDSRE.TabIndex = 20;
+            this.buttonDSRE.Text = "Dark Souls: Remastered";
+            this.buttonDSRE.UseVisualStyleBackColor = true;
+            this.buttonDSRE.Click += new System.EventHandler(this.buttonDSRE_Click);
+            // 
             // hotkeyControlQL
             // 
             this.hotkeyControlQL.Hotkey = System.Windows.Forms.Keys.F8;
             this.hotkeyControlQL.HotkeyModifiers = System.Windows.Forms.Keys.None;
-            this.hotkeyControlQL.Location = new System.Drawing.Point(315, 108);
+            this.hotkeyControlQL.Location = new System.Drawing.Point(315, 144);
             this.hotkeyControlQL.Name = "hotkeyControlQL";
             this.hotkeyControlQL.Size = new System.Drawing.Size(90, 20);
             this.hotkeyControlQL.TabIndex = 7;
@@ -236,7 +247,7 @@
             // 
             this.hotkeyControlQS.Hotkey = System.Windows.Forms.Keys.F7;
             this.hotkeyControlQS.HotkeyModifiers = System.Windows.Forms.Keys.None;
-            this.hotkeyControlQS.Location = new System.Drawing.Point(117, 108);
+            this.hotkeyControlQS.Location = new System.Drawing.Point(117, 144);
             this.hotkeyControlQS.Name = "hotkeyControlQS";
             this.hotkeyControlQS.Size = new System.Drawing.Size(90, 20);
             this.hotkeyControlQS.TabIndex = 5;
@@ -246,7 +257,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(534, 212);
+            this.ClientSize = new System.Drawing.Size(532, 250);
+            this.Controls.Add(this.buttonDSRE);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonDS3);
             this.Controls.Add(this.buttonSOTFS);
@@ -301,6 +313,7 @@
         private System.Windows.Forms.Button buttonSOTFS;
         private System.Windows.Forms.Button buttonDS3;
         private System.Windows.Forms.Button buttonStop;
+        private System.Windows.Forms.Button buttonDSRE;
     }
 }
 

@@ -47,6 +47,31 @@ namespace QuickSouls
             File.WriteAllLines(@"QuickSouls.ini", lines);
         }
 
+        // Set Dark Souls: Remastered defaults
+        private void buttonDSRE_Click(object sender, EventArgs e)
+        {
+            // Try to figure out unique ID without user input
+            string DSRDir = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents\\NBGI\\DARK SOULS REMASTERED\\");
+            if (!Directory.Exists(DSRDir)) Directory.CreateDirectory(DSRDir);
+            List<string> subfolders = new List<string>(Directory.EnumerateDirectories(DSRDir));
+            string DSRId = subfolders.Count == 1 ? subfolders[0].Substring(subfolders[0].LastIndexOf("\\") + 1) + "\\" : "paste-your-id-here-and-set\\";
+
+            if (subfolders.Count != 1) { MessageBox.Show("Could not determine unique ID automatically, please add it in the path field on your own.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+
+            // Proceed as usual
+            SaveDir = DSRDir + DSRId;
+            textBoxDir.Text = SaveDir;
+            GameID = 5;            
+
+            var lines = File.ReadAllLines(@"QuickSouls.ini");
+            lines[0] = SaveDir;
+            lines[6] = GameID.ToString();
+            File.WriteAllLines(@"QuickSouls.ini", lines);
+
+            // ***REMOVE LATER***
+            MessageBox.Show("This has not been tested yet and is merely based on a theoretical approach. Do not forget to insert the unique ID from the savedata path.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
         // Set Dark Souls 2 defaults
         private void buttonDS2_Click(object sender, EventArgs e)
         {
@@ -56,7 +81,7 @@ namespace QuickSouls
             List<string> subfolders = new List<string>(Directory.EnumerateDirectories(DS2Dir));
             string DS2Id = subfolders.Count == 1 ? subfolders[0].Substring(subfolders[0].LastIndexOf("\\") + 1) + "\\" : "paste-your-id-here-and-set\\";
 
-            if (subfolders.Count > 1) { MessageBox.Show("Could not determine unique ID automatically, please add it in the path field on your own.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+            if (subfolders.Count != 1) { MessageBox.Show("Could not determine unique ID automatically, please add it in the path field on your own.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
 
             // Proceed as usual
             textBoxDir.Text = DS2Dir + DS2Id;
@@ -81,7 +106,7 @@ namespace QuickSouls
             List<string> subfolders = new List<string>(Directory.EnumerateDirectories(DS2Dir));
             string DS2Id = subfolders.Count == 1 ? subfolders[0].Substring(subfolders[0].LastIndexOf("\\") + 1) + "\\" : "paste-your-id-here-and-set\\";
 
-            if (subfolders.Count > 1) { MessageBox.Show("Could not determine unique ID automatically, please add it in the path field on your own.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+            if (subfolders.Count != 1) { MessageBox.Show("Could not determine unique ID automatically, please add it in the path field on your own.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
 
             // Proceed as usual
             textBoxDir.Text = DS2Dir + DS2Id;
@@ -106,7 +131,7 @@ namespace QuickSouls
             List<string> subfolders = new List<string>(Directory.EnumerateDirectories(DS3Dir));
             string DS3Id = subfolders.Count == 1 ? subfolders[0].Substring(subfolders[0].LastIndexOf("\\") + 1) + "\\" : "paste-your-id-here-and-set\\";
 
-            if (subfolders.Count > 1) { MessageBox.Show("Could not determine unique ID automatically, please add it in the path field on your own.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+            if (subfolders.Count != 1) { MessageBox.Show("Could not determine unique ID automatically, please add it in the path field on your own.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
 
             // Proceed as usual
             textBoxDir.Text = DS3Dir + DS3Id;
@@ -211,6 +236,14 @@ namespace QuickSouls
                         playSound();
                 }
 
+                // Dark Souls: Remastered
+                if (GameID == 5 && File.Exists(SaveDir + "DRAKS0005.sl2"))
+                {
+                    File.Copy(SaveDir + "DRAKS0005.sl2", @"quicksave_dsr.sl2", true);
+                    if (SoundFlag == true)
+                        playSound();
+                }
+
                 // Dark Souls 2
                 if (GameID == 2 && File.Exists(SaveDir + "DARKSII0000.sl2"))
                 {
@@ -245,6 +278,18 @@ namespace QuickSouls
                     try
                     {
                         File.Copy(@"quicksave_ptde.sl2", SaveDir + "DRAKS0005.sl2", true);
+                        if (SoundFlag == true)
+                            playSound();
+                    }
+                    catch { MessageBox.Show("Could not complete quick load.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+                }
+
+                // Dark Souls: Remastered
+                if (GameID == 5 && File.Exists(@"quicksave_dsr.sl2"))
+                {
+                    try
+                    {
+                        File.Copy(@"quicksave_dsr.sl2", SaveDir + "DRAKS0005.sl2", true);
                         if (SoundFlag == true)
                             playSound();
                     }
